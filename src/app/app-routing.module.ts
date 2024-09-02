@@ -22,11 +22,6 @@ const routes: Routes = [
     redirectTo: 'login',
     pathMatch: 'full',
   },
-  {
-    path: 'producto',
-    loadChildren: () => import('./page/producto/producto.module').then(m => m.ProductoPageModule),
-    canActivate: [authGuard]
-  },
 ];
 
 @NgModule({

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-home',
@@ -7,16 +7,15 @@ import { MenuController } from '@ionic/angular';
   styleUrls: ['./admin-home.page.scss'],
 })
 export class AdminHomePage implements OnInit {
+  usuario: any;
 
-  constructor(private menu: MenuController) { }
-
-  ngOnInit() {
+  constructor(private router: Router) {
+    const navigation = this.router.getCurrentNavigation();
+    if (navigation?.extras?.state) {
+      this.usuario = navigation.extras.state['usuario'];
+    }
   }
 
-
-  openFirst() {
-    this.menu.enable(true, 'first');
-    this.menu.open('first');
-  }
-
+  ngOnInit() {}
 }
+

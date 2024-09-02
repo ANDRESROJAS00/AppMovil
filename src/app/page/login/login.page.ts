@@ -9,27 +9,40 @@ import { UsersService } from 'src/app/api/users/users.service';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  username = "";
-  password = "";
+  username = '';
+  password = '';
 
-  constructor(private authService: AuthserviceService, private _usuarioService: UsersService, private router: Router) { }
+  constructor(
+    private authService: AuthserviceService,
+    private _usuarioService: UsersService,
+    private router: Router
+  ) {}
 
   ngOnInit() {}
 
   login(username: string, password: string) {
     const resultado = this._usuarioService.validar_usuario(username, password);
     if (resultado && resultado.valid) {
-      console.log("Usuario existe");
-      this.authService.login();
+      console.log('Usuario existe');
+      this.authService.login({
+        username,
+        rol: resultado.rol
+      });
+
       if (resultado.rol === 'admin') {
-        this.router.navigate(['admin-home']);
+        this.router.navigate(['admin-home'], {
+          state: { usuario: this.authService.getCurrentUser() }
+        });
       } else {
-        this.router.navigate(['inicio']);
+        this.router.navigate(['inicio'], {
+          state: { usuario: this.authService.getCurrentUser() }
+        });
       }
     } else {
-      console.error("Usuario no existe");
+      console.error('Usuario no existe');
     }
   }
 }
+
 
 
