@@ -6,15 +6,14 @@ import * as bcrypt from 'bcryptjs';
   providedIn: 'root',
 })
 export class UsersService {
-  // UserLogin[] indica que usuarios es un array que puede contener múltiples objetos de tipo UserLogin.
-  // Cada objeto en este array debe seguir la estructura definida por la interfaz UserLogin, que tiene dos propiedades: username y password, ambas de tipo string.
+ 
   private usuarios: UserLogin[] = [
     {
       id: 1,
       nombre: 'Andres',
       apellido: 'Rojas',
       username: 'MatDre',
-      password: bcrypt.hashSync('719397', 10), // Contraseña encriptada
+      password: bcrypt.hashSync('789456', 10), // Contraseña encriptada
       rol: {
         id: 1,
         nombre: 'users',
@@ -41,8 +40,7 @@ export class UsersService {
 
   }
 
-  //validar_usuario es el nombre de la función.
-  //userLogin: UserLogin es un parámetro que la función recibe, y es de tipo UserLogin, lo que significa que debe ser un objeto con las propiedades username y password.
+
   validar_usuario(username: string, password: string): { valid: boolean; rol: string } | null {
     const usuario = this.usuarios.find(user => user.username === username);
     if (usuario && bcrypt.compareSync(password, usuario.password)) {
